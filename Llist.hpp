@@ -15,8 +15,8 @@ class Llist
 {
 public:
 	Llist();
-	void insertBegin(int data);
-	void insertEnd(int data);
+	void insertBegin(T data);
+	void insertEnd(T data);
 	void printList();
 	void clear();
 
@@ -24,8 +24,9 @@ public:
 private:
 	Node<T> *mHead;
 	Node<T> *mTail;
-	void initList(int data);
+	void initList(T data);
 };
+#include "LlistIMP.hpp"
 
 #endif // LLIST_HPP
 

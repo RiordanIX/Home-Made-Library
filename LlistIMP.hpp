@@ -1,23 +1,24 @@
 #ifndef LLISTIMP_HPP
 #define LLISTIMP_HPP
+
 #include "Llist.hpp"
 
 template<class T>
 Llist<T>::Llist() : mHead(nullptr), mTail(nullptr) {}
 
 template<class T>
-void Llist::initList(T _data)
+void Llist<T>::initList(T _data)
 {
 	// Because it's the only element in the list,
 	// the head and the tail are the same.
 	mTail = new Node<T>();
 	mTail->data = _data;	// Set data
 	mTail->next = nullptr;	// No next node.
-	mHead = mTail;0
+	mHead = mTail;
 }
 
 template<class T>
-void Llist::insertBegin(T _data)
+void Llist<T>::insertBegin(T _data)
 {
 	// if empty, need to make new stuff.
 	if (mTail == nullptr)
@@ -35,7 +36,7 @@ void Llist::insertBegin(T _data)
 }
 
 template<class T>
-void Llist::insertEnd(T _data)
+void Llist<T>::insertEnd(T _data)
 {
 	if (mHead == nullptr)
 	{
@@ -53,7 +54,7 @@ void Llist::insertEnd(T _data)
 }
 
 template<class T>
-void Llist::printList()
+void Llist<T>::printList()
 {
 	Node<T> *step = mHead;		// Used to step through the list.
 
@@ -72,7 +73,7 @@ void Llist::printList()
 }
 
 template<class T>
-void Llist::clear()
+void Llist<T>::clear()
 {
 	Node<T> *step = mHead;
 	while (step != nullptr)
@@ -86,7 +87,7 @@ void Llist::clear()
 }
 
 template<class T>
-Llist::~Llist()
+Llist<T>::~Llist()
 {
 	clear();
 }
