@@ -3,12 +3,14 @@
 
 #include <iostream>
 
+template<class T>
 struct Node
 {
-	int data;	// Actual data.  TODO:  Templatize this.
+	T data;		// Actual data.  TODO:  Templatize this.
 	Node *next;	// Pointer to next node.
 };
 
+template<class T>
 class Llist
 {
 public:
@@ -20,9 +22,10 @@ public:
 
 	~Llist();
 private:
-	Node *mHead;
-	Node *mTail;
+	Node<T> *mHead;
+	Node<T> *mTail;
 	void initList(int data);
 };
 
 #endif // LLIST_HPP
+
