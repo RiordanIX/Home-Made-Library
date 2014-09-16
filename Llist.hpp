@@ -3,10 +3,13 @@
 
 #include <iostream>
 
+/** This is a templated Linked list class. 
+**/
+
 template<class T>
 struct Node
 {
-	T data;		// Actual data.  TODO:  Templatize this.
+	T data;		// Actual data.
 	Node *next;	// Pointer to next node.
 };
 

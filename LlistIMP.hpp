@@ -1,7 +1,7 @@
 #ifndef LLISTIMP_HPP
 #define LLISTIMP_HPP
 
-#include "Llist.hpp"
+#include "Llist.hpp"    // Llist stands for "Linked List"
 
 template<class T>
 Llist<T>::Llist() : mHead(nullptr), mTail(nullptr) {}
@@ -48,7 +48,7 @@ void Llist<T>::insertEnd(T _data)
 		Node<T> *node = new Node<T>();
 		node->data = _data;
 		node->next = nullptr;
-		mTail->next = node; // This is now the second to last node, so pointing it to the end,
+		mTail->next = node;	// This is now the second to last node, so pointing it to the end,
 		mTail = node;		// before setting the Tail to the end.
 	}
 }
@@ -58,10 +58,10 @@ void Llist<T>::printList()
 {
 	Node<T> *step = mHead;		// Used to step through the list.
 
-	while (step != nullptr) // while not at end of list.
+	while (step != nullptr)		// while not at end of list.
 	{
 		std::cout << step->data << " ";
-		step = step->next;	// Pointing to next in list.
+		step = step->next;      // Pointing to next in list.
 	}
 
 	std::cout << std::endl << std::endl;
@@ -72,6 +72,8 @@ void Llist<T>::printList()
 		std::cout << "Tail is " << mTail->data << std::endl;
 }
 
+// Since this is a dynamic class, we need to free up the memory we allocated.
+// No memory leaks here!
 template<class T>
 void Llist<T>::clear()
 {
