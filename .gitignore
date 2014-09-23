@@ -1,8 +1,17 @@
 /bin/Debug/Testing
 /Testing.depend
+
+# I'm using this for testing.
 /main.cpp
-/Testing.layout
-/Testing.cbp
+
+# Qt creator files
+*.pro
+*.user
+
+# Code::Blocks files
+*.layout
+*.cbp
+
 # Compiled Object files
 *.slo
 *.lo
@@ -37,7 +46,8 @@
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
