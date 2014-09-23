@@ -9,6 +9,10 @@
 *.fsproj merge=union
 *.dbproj merge=union
 
+# Qt creator files
+*.pro
+*.user
+
 # Standard to msysgit
 *.doc	 diff=astextplain
 *.DOC	 diff=astextplain
