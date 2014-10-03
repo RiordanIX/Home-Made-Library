@@ -8,16 +8,16 @@ Button::Button(std::string filename, void (*funct)()):
     m_texture.loadFromFile(filename);   /// The file name is needed for which file to load.
 
     m_spriteAreaNormal = sf::IntRect(0, /// Buttons should follow this stacking format: NORMAL
-                          0,                                    ///                     HOVERED
-                          m_texture.getSize().x,                ///                     CLICKED
+                          0,
+                          m_texture.getSize().x,
                           (m_texture.getSize().y / 3));
 
-    m_spriteAreaHovered = sf::IntRect(0,
+    m_spriteAreaHovered = sf::IntRect(0,                        ///                     HOVERED
                            (m_texture.getSize().y / 3),
                            m_texture.getSize().x,
                            (m_texture.getSize().y / 3));
 
-    m_spriteAreaClicked = sf::IntRect(0,
+    m_spriteAreaClicked = sf::IntRect(0,                        ///                     CLICKED
                            (m_texture.getSize().y * 2 / 3),// 2 first to min rounding errors.
                            m_texture.getSize().x,
                            (m_texture.getSize().y / 3));
@@ -33,14 +33,13 @@ void Button::changeAction(void (*funct)())
 
 bool Button::contains(sf::RenderWindow& window)
 {
-    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-    sf::FloatRect rekt = m_sprite.getGlobalBounds(); // Get rekt, son!
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window); // Need window input to make offsets work.
+    sf::FloatRect rekt = m_sprite.getGlobalBounds();
 
     return (mousePos.x <= (rekt.width + rekt.left) &&
             mousePos.x >= (rekt.left) &&
             mousePos.y <= (rekt.height + rekt.top) &&
             mousePos.y >= (rekt.top));
-    // Need to update this so it actually works.
 }
 
 /* My convention will be to have buttons that are as follows:
@@ -68,7 +67,7 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
 {
     switch (event.type)
     {
-    case (sf::Event::MouseButtonPressed):
+    case sf::Event::MouseButtonPressed:
         if (contains(window))
         {
             m_state = buttState::clicked;
@@ -82,7 +81,7 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
         }
         break;
 
-    case (sf::Event::MouseMoved):
+    case sf::Event::MouseMoved:
         if (contains(window))
         {
             if (m_mouseClicked)
@@ -93,18 +92,15 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
             {
                 m_state = buttState::hovered;
             }
-            updateSpriteBox();
         }
-
         else
         {
             m_state = buttState::normal;
-            updateSpriteBox();
         }
+        updateSpriteBox();
         break;
-    
-    // I don't want the function to be called unless the mouse button is released on the button.
-    case (sf::Event::MouseButtonReleased):
+
+    case sf::Event::MouseButtonReleased:    // updateSpriteBox() is in the if statements here to get the appearance I want.
         if (contains(window))
         {
             m_state = buttState::hovered;
@@ -119,17 +115,36 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
         m_mouseClicked = false;
         break;
 
+    case sf::Event::MouseLeft:      // Mouse leaves window
+        m_state = buttState::normal;
+        updateSpriteBox();
+        break;
+
+    case sf::Event::MouseEntered:   // Mouse Re-enters window
+        if (contains(window))       // If the mouse is on the button
+        {
+            if (m_mouseClicked)     // And if the mouse is still held down.
+            {
+                m_state = buttState::clicked;
+            }
+            else
+            {
+                m_state = buttState::hovered;
+            }
+        }
+        else
+        {
+            m_state = buttState::normal;
+        }
+        updateSpriteBox();
+        break;
+
     default:
         break;
     }
 }
 
-//  Used for drawing the button in a more intuitive way.  For example:
-//  window.draw(button);
-//  Instead of:
-//  window.draw(button.sprite);
-
-void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const // To make drawing the button more inline with the SFML way of drawing.
 {
     target.draw(m_sprite, states);
 }
