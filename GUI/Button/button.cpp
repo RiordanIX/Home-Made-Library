@@ -5,6 +5,20 @@ Button::Button(std::string filename, void (*funct)()):
     m_mouseClicked(false),
     m_function(funct)
 {
+    /// The file name is needed for which file to load.
+    m_texture = new sf::Texture();
+    m_texture->loadFromFile(filename);
+    setSpriteSize();
+
+    m_sprite.setTexture(*m_texture);
+    m_sprite.setTextureRect(m_spriteAreaNormal);
+}
+
+Button::~Button()
+{
+    delete m_texture;
+    m_texture = NULL;
+{
     m_texture.loadFromFile(filename);   /// The file name is needed for which file to load.
 
     m_spriteAreaNormal = sf::IntRect(0, /// Buttons should follow this stacking format: NORMAL
@@ -42,7 +56,7 @@ bool Button::contains(sf::RenderWindow& window)
             mousePos.y >= (rekt.top));
 }
 
-/* My convention will be to have buttons that are as follows:
+/* My convention will be to have button Images that are as follows:
  *      NORMAL
  *      HOVERED
  *      CLICKED
@@ -77,8 +91,8 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
         else
         {
             m_state = buttState::normal;
-            updateSpriteBox();
         }
+        
         break;
 
     case sf::Event::MouseMoved:
@@ -100,7 +114,8 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
         updateSpriteBox();
         break;
 
-    case sf::Event::MouseButtonReleased:    // updateSpriteBox() is in the if statements here to get the appearance I want.
+    // updateSpriteBox() is in the if statements here to get the appearance I want.
+    case sf::Event::MouseButtonReleased:
         if (contains(window))
         {
             m_state = buttState::hovered;
@@ -144,7 +159,42 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
     }
 }
 
-void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const // To make drawing the button more inline with the SFML way of drawing.
+void Button::changeTexture(std::string texture)
+{
+    delete m_texture;
+    m_texture = NULL;
+    m_texture = new sf::Texture();
+    m_texture->loadFromFile(texture);
+    setSpriteSize();
+}
+
+/// To make drawing the button more inline with SFML methodology.
+void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(m_sprite, states);
+}
+
+void Button::setSpriteSize()
+{
+    m_spriteAreaNormal = sf::IntRect(0, /// Buttons should follow this stacking format: NORMAL
+                          0,
+                          m_texture->getSize().x,
+                          (m_texture->getSize().y / 3));
+
+    m_spriteAreaHovered = sf::IntRect(0,                        ///                     HOVERED
+                           (m_texture->getSize().y / 3),
+                           m_texture->getSize().x,
+                           (m_texture->getSize().y / 3));
+
+    m_spriteAreaClicked = sf::IntRect(0,                        ///                     CLICKED
+                           (m_texture->getSize().y * 2 / 3),// 2 first to min rounding errors.
+                           m_texture->getSize().x,
+                           (m_texture->getSize().y / 3));
+    sf::RenderWindow window;
+}
+
+// To make drawing the button more inline with the SFML way of drawing.
+void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(m_sprite, states);
 }
