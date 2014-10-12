@@ -16,30 +16,35 @@ enum buttState  // Just button...
 };
 };
 
-class Button : public sf::Drawable  // Makes drawing the button far more intuitive
+// By inheriting from Drawable, it makes drawing the button more intuitive.
+class Button : public sf::Drawable
 {
 public:
-    // The function pointer is what the button will do when clicked.  I don't know if a different format would
-    // be needed, but I'll add a new constructor if it is.
+    // The function pointer is what the button will do when clicked.
+    // I don't know if a different format would be needed,
+    // but I'll add a new constructor if it is.
     Button(std::string, void (*function)());
+    ~Button();
     void handleEvent(sf::Event&, sf::RenderWindow& window);
-    void changeAction(void (*function)());  // Again, if needed I'll add another format for the function pointer.
+    void changeAction(void (*function)());
+    void changeTexture(std::string);
 
 private:
-    sf::Sprite m_sprite;
-    sf::Texture m_texture;
-    sf::IntRect m_spriteAreaNormal;
-    sf::IntRect m_spriteAreaHovered;
-    sf::IntRect m_spriteAreaClicked;
-    buttState::buttState m_state;
-    bool m_mouseClicked;
-
+    sf::Sprite              m_sprite;
+    sf::Texture*            m_texture;
+    sf::IntRect             m_spriteAreaNormal;
+    sf::IntRect             m_spriteAreaHovered;
+    sf::IntRect             m_spriteAreaClicked;
+    buttState::buttState    m_state;
+    bool                    m_mouseClicked;
+    
 private:
-    virtual void draw(sf::RenderTarget& target,sf::RenderStates states) const;  // from sf::Drawable
+    virtual void draw(sf::RenderTarget&, sf::RenderStates) const;  // from sf::Drawable
     void updateSpriteBox();
+    void setSpriteSize();
     bool contains(sf::RenderWindow&);
     void (*m_function) (); // Function Pointer - function done when button is clicked.
 };
 
-
 #endif // BUTTON_HPP
+
