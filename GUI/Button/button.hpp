@@ -23,13 +23,15 @@ public:
     // The function pointer is what the button will do when clicked.
     // I don't know if a different format would be needed,
     // but I'll add a new constructor if it is.
-    Button(std::string, void (*function)());
+    Button(std::string &, void (*function)());
     ~Button();
     void handleEvent(sf::Event&, sf::RenderWindow& window);
     void changeAction(void (*function)());
-    void changeTexture(std::string);
+    void changeTexture(std::string &);
     void setPosition(float, float);
-    void setPosition(sf::Vector2f);
+    void setPosition(sf::Vector2f &);
+    void move(float, float);
+    void move(sf::Vector2f &);
 
 private:
     sf::Sprite              m_sprite;

@@ -1,6 +1,6 @@
 #include "button.hpp"
 
-Button::Button(std::string filename, void (*funct)()):
+Button::Button(std::string &filename, void (*funct)()):
     m_state(buttState::normal),
     m_mouseClicked(false),
     m_function(funct)
@@ -139,12 +139,12 @@ void Button::handleEvent(sf::Event& event, sf::RenderWindow& window)
     }
 }
 
-void Button::changeTexture(std::string texture)
+void Button::changeTexture(std::string &filename)
 {
     delete m_texture;
     m_texture = NULL;
     m_texture = new sf::Texture();
-    m_texture->loadFromFile(texture);
+    m_texture->loadFromFile(filename);
     setSpriteSize();
 }
 
@@ -153,9 +153,19 @@ void Button::setPosition(float x, float y)
     m_sprite.setPosition(x, y);
 }
 
-void Button::setPosition(sf::Vector2f vect)
+void Button::setPosition(sf::Vector2f &vect)
 {
     m_sprite.setPosition(vect);
+}
+
+void Button::move(float offX, float offY)
+{
+    m_sprite.move(offX, offY);
+}
+
+void Button::move(sf::Vector2f &offset)
+{
+    m_sprite.move(offset);
 }
 
 void Button::setSpriteSize()
