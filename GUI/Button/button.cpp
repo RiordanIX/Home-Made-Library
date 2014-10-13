@@ -18,26 +18,6 @@ Button::~Button()
 {
     delete m_texture;
     m_texture = NULL;
-{
-    m_texture.loadFromFile(filename);   /// The file name is needed for which file to load.
-
-    m_spriteAreaNormal = sf::IntRect(0, /// Buttons should follow this stacking format: NORMAL
-                          0,
-                          m_texture.getSize().x,
-                          (m_texture.getSize().y / 3));
-
-    m_spriteAreaHovered = sf::IntRect(0,                        ///                     HOVERED
-                           (m_texture.getSize().y / 3),
-                           m_texture.getSize().x,
-                           (m_texture.getSize().y / 3));
-
-    m_spriteAreaClicked = sf::IntRect(0,                        ///                     CLICKED
-                           (m_texture.getSize().y * 2 / 3),// 2 first to min rounding errors.
-                           m_texture.getSize().x,
-                           (m_texture.getSize().y / 3));
-
-    m_sprite.setTexture(m_texture);
-    m_sprite.setTextureRect(m_spriteAreaNormal);
 }
 
 void Button::changeAction(void (*funct)())
@@ -166,12 +146,6 @@ void Button::changeTexture(std::string texture)
     m_texture = new sf::Texture();
     m_texture->loadFromFile(texture);
     setSpriteSize();
-}
-
-/// To make drawing the button more inline with SFML methodology.
-void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    target.draw(m_sprite, states);
 }
 
 void Button::setSpriteSize()
