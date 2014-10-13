@@ -148,6 +148,16 @@ void Button::changeTexture(std::string texture)
     setSpriteSize();
 }
 
+void Button::setPosition(float x, float y)
+{
+    m_sprite.setPosition(x, y);
+}
+
+void Button::setPosition(sf::Vector2f vect)
+{
+    m_sprite.setPosition(vect);
+}
+
 void Button::setSpriteSize()
 {
     m_spriteAreaNormal = sf::IntRect(0, /// Buttons should follow this stacking format: NORMAL

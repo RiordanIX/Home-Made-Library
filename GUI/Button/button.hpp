@@ -28,6 +28,8 @@ public:
     void handleEvent(sf::Event&, sf::RenderWindow& window);
     void changeAction(void (*function)());
     void changeTexture(std::string);
+    void setPosition(float, float);
+    void setPosition(sf::Vector2f);
 
 private:
     sf::Sprite              m_sprite;
