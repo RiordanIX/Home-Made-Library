@@ -1,58 +1,70 @@
 #ifndef MERGE_HPP
 #define MERGE_HPP
 
-#include <iostream>
+// forward statements of functions.
+template<class T>
+void mergeSort(T A[], T B[], int size);
 
 template<class T>
-T* mergeSort(T* unsorted, int size)
+void __MSSplit(T A[], T B[], int _begin, int _end);
+
+template<class T>
+void __MSMerge(T A[], T B[], int _begin, int _middle, int _end);
+
+template<class T>
+void __MSCopy(T A[], T B[], int _begin, int _end);
+
+
+
+// Implementation of functions.
+// B is the uninitialized array to be filled.
+template<class T>
+void mergeSort(T A[], T B[], int size)
 {
-	if (size <= 1)
-		return unsorted;
+	__MSSplit(A, B, 0, size);
+}
 
-	// Bit-shifting and subtracting so that odd size arrays will be split consistently.
-	int sizeOfA = size >> 1;
-	int sizeOfB = size - sizeOfA;
+template<class T> // B is the empty array.
+void __MSSplit(T A[], T B[], int _begin, int _end)
+{
+	if(_end - _begin < 2) // if size of array is == 1 
+		return;
+	// recursively split into halves until size is 1,
+	// then merge and go back up.
+	int _middle = (_end + _begin) / 2;
+	__MSSplit(A, B, _begin, _middle);	// middle will be excluded.
+	__MSSplit(A, B, _middle, _end);		// middle will be included.
+	__MSMerge(A, B, _begin, _middle, _end);
+	__MSCopy (A, B, _begin, _end);
+}
 
-	T A[sizeOfA];// Front half
-	T B[sizeOfB] = *(unsorted[sizeOfA]);// Second half.
-	T C[size];
+template<class T> // B is the empty array to have the sorted part applied.
+void __MSMerge(T A[], T B[], int _begin, int _middle, int _end)
+{
+	int i = _begin;
+	int j = _middle;
 
-	if (size > 2)
+	for (int k = _begin; k < _end; ++k)
 	{
-		A = mergeSort(unsorted, sizeOfA);
-		// Pointer pointing to the dereferenced value of unsorted at sizeOfA
-		// (Start of the second half of the array)
-		B = mergeSort(*(unsorted[sizeOfA]), sizeOfB);
-	}
-	
-	if (size == 2)
-	{
-		if (unsorted[0] < unsorted[1])
+		// If first half is still going and is < right run part.
+		if (i < _middle && (j >= _end || A[i] <= A[j]))
 		{
-			C[0] = unsorted[0];
-			C[1] = unsorted[1];
-			return C;
-		}
-	}
-
-	int i = 0;
-	int j = 0;
-	// Actual merge part.
-	for (int k = 0; k < size; ++k)
-	{
-		if (A[i] < B[j])
-		{
-			C[k] = A[i];
+			B[k] = A[i];
 			++i;
 		}
 		else
 		{
-			C[k] = B[j];
+			B[k] = A[j];
 			++j;
 		}
 	}
+}
 
-	return C;
+template<class T> // To make the original array be sorted.
+void MSCopy(T A[], T B[], int _begin, int _end)
+{
+	for (int i = _begin; i < _end; ++i)
+		A[i] = B[i];
 }
 
 
