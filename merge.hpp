@@ -2,69 +2,62 @@
 #define MERGE_HPP
 
 // forward statements of functions.
-template<class T>
-void mergeSort(T A[], T B[], int size);
 
 template<class T>
-void __MSSplit(T A[], T B[], int _begin, int _end);
+void merge_sort(T A[], T temp[], int begin, int end);
 
 template<class T>
-void __MSMerge(T A[], T B[], int _begin, int _middle, int _end);
+void _merge(T A[], T temp[], int begin, int mid, int end);
 
 template<class T>
-void __MSCopy(T A[], T B[], int _begin, int _end);
+void _copy(T A[], T temp[], int begin, int end);
 
 
 
 // Implementation of functions.
-// B is the uninitialized array to be filled.
-template<class T>
-void mergeSort(T A[], T B[], int size)
-{
-	__MSSplit(A, B, 0, size);
-}
 
-template<class T> // B is the empty array.
-void __MSSplit(T A[], T B[], int _begin, int _end)
+
+template<class T> // temp is the empty array.
+void merge_sort(T A[], T temp[], int begin, int end)
 {
-	if(_end - _begin < 2) // if size of array is == 1 
+	if(end - begin < 2) // if size of array is == 1 
 		return;
 	// recursively split into halves until size is 1,
 	// then merge and go back up.
-	int _middle = (_end + _begin) / 2;
-	__MSSplit(A, B, _begin, _middle);	// middle will be excluded.
-	__MSSplit(A, B, _middle, _end);		// middle will be included.
-	__MSMerge(A, B, _begin, _middle, _end);
-	__MSCopy (A, B, _begin, _end);
+	int mid = (end + begin) / 2;
+	merge_sort(A, temp, begin, mid);	// mid will be excluded.
+	merge_sort(A, temp, mid, end);		// mid will be included.
+	_merge(A, temp, begin, mid, end);
+	_copy (A, temp, begin, end);
 }
 
-template<class T> // B is the empty array to have the sorted part applied.
-void __MSMerge(T A[], T B[], int _begin, int _middle, int _end)
+template<class T> // temp is the empty array to have the sorted part applied.
+void _merge(T A[], T temp[], int begin, int mid, int end)
 {
-	int i = _begin;
-	int j = _middle;
+	int i = begin;
+	int j = mid;
 
-	for (int k = _begin; k < _end; ++k)
+	for (int k = begin; k < end; ++k)
 	{
 		// If first half is still going and is < right run part.
-		if (i < _middle && (j >= _end || A[i] <= A[j]))
+		if (i < mid && (j >= end || A[i] <= A[j]))
 		{
-			B[k] = A[i];
+			temp[k] = A[i];
 			++i;
 		}
 		else
 		{
-			B[k] = A[j];
+			temp[k] = A[j];
 			++j;
 		}
 	}
 }
 
 template<class T> // To make the original array be sorted.
-void MSCopy(T A[], T B[], int _begin, int _end)
+void _copy(T A[], T temp[], int begin, int end)
 {
-	for (int i = _begin; i < _end; ++i)
-		A[i] = B[i];
+	for (int i = begin; i < end; ++i)
+		A[i] = temp[i];
 }
 
 
