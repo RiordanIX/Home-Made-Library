@@ -1,12 +1,13 @@
 #ifndef INSERTION_HPP
 #define INSERTION_HPP
 
-
+// We have a 'begin' variable in case you only want a certain part sorted.
+// This is mostly added for the low-end phases of merge_sort and others.
 template<class T>
-void insertion_sort(T *A, int size)
+void insertion_sort(T *A, int end, int begin = 0)
 {
-	// Return if empty array, or size is less than 1.
-	if ((A == nullptr) || (size < 1))
+	// Return if empty array, or end (the size in some cases) is less than 1.
+	if ((A == nullptr) || (end < 1))
 		return;
 
 	// Temporary object for moving stuff around.
@@ -15,14 +16,14 @@ void insertion_sort(T *A, int size)
 	int i, j;
 
 	// Start at second element.
-	for (i = 1; i < size; i++)
+	for (i = begin + 1; i < end; i++)
 	{
 		temp = A[i];
 
 		// Loop through elements starting with one less than i, and as long as
 		// A[j] is greater than A[i], shift array to the right until the original
 		// A[i] is INSERTED in the right place.
-		for (j = i; j > 0 && temp < A[j-1]; j--)
+		for (j = i; j > begin && temp < A[j-1]; j--)
 		{
 			A[j] = A[j-1];
 		}

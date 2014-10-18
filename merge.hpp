@@ -1,6 +1,8 @@
 #ifndef MERGE_HPP
 #define MERGE_HPP
 
+// include insertion so if the small parts of the array are small enough
+// (< 16), it will use insertion sort because it's faster on small lists.
 #include "insertion.hpp"
 // forward statements of functions.
 
@@ -36,17 +38,26 @@ void merge_sort(T A[], const int size)
 template<class T> // temp is the empty array.
 void _split(T A[], T temp[], int begin, int end)
 {
-	// I chose 16 because it's a power of 2 and 
-	// if ((end - begin) <= 16)
-	//	insertion_sort(A, end - begin);
-	// TODO: implement insertion sort for sizes < 16.
 	if ((end - begin) < 2)
 		return;
+	
+	
 	// recursively split into halves until size is 1,
 	// then merge and go back up.
 	int mid = (end + begin) / 2;
-	_split(A, temp, begin, mid);	// mid will be excluded.
-	_split(A, temp, mid, end);		// mid will be included.
+
+	// I chose 16 because it's a power of 2 and precedence.
+	if ((end - mid) <= 16)
+	{
+		insertion_sort(A, end, mid);	// mid included.
+		insertion_sort(A, mid, begin);	// mid excluded.
+	}
+	// Split if large enough.
+	else
+	{
+		_split(A, temp, begin, mid);	// mid will be excluded.
+		_split(A, temp, mid, end);		// mid will be included.
+	}
 	_merge(A, temp, begin, mid, end);	// merge them back again.
 	_copy (A, temp, begin, end);		// Copy sorted array to original array.
 }
