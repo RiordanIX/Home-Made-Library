@@ -1,6 +1,7 @@
 #ifndef MERGE_HPP
 #define MERGE_HPP
 
+#include "insertion.hpp"
 // forward statements of functions.
 
 template<class T>
@@ -20,10 +21,13 @@ void _copy(T A[], T temp[], int begin, int end);
 // Implementation of functions.
 
 /// Takes an array and its size.  Creates a temporary array in order to do the
-/// sort.  
+/// sort and copy correctly.  
 template<class T>
 void merge_sort(T A[], const int size)
 {
+	// No point in sorting if array doesn't point to anything or has but 1 element.
+	if ((A == nullptr) || (size <= 1))
+		return;
 	T temp[size];
 	_split(A, temp, 0, size);
 	// Will automatically delete temp when loses scope.
@@ -32,7 +36,11 @@ void merge_sort(T A[], const int size)
 template<class T> // temp is the empty array.
 void _split(T A[], T temp[], int begin, int end)
 {
-	if(end - begin < 2) // if size of array is == 1 
+	// I chose 16 because it's a power of 2 and 
+	// if ((end - begin) <= 16)
+	//	insertion_sort(A, end - begin);
+	// TODO: implement insertion sort for sizes < 16.
+	if ((end - begin) < 2)
 		return;
 	// recursively split into halves until size is 1,
 	// then merge and go back up.
