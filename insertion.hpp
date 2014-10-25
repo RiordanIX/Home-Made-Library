@@ -6,8 +6,8 @@
 template<class T>
 void insertion_sort(T *A, int end, int begin = 0)
 {
-	// Return if empty array, or end (the size in some cases) is less than 1.
-	if ((A == nullptr) || (end < 1))
+	// Return if empty array, or end (the size in some cases) has only 1 element.
+	if ((A == nullptr) || (end < 2))
 		return;
 
 	// Temporary object for moving stuff around.
