@@ -14,22 +14,21 @@ struct SLL_Node // Singly Linked List node
 };
 
 template<class T>
-class SLlist
+class SLList
 {
 public:
-	SLlist();
+	SLList();
+	~SLList();
 	void insertBegin(T data);
 	void insertEnd(T data);
 	void printList();
 	void clear();
 
-	~SLlist();
 private:
-	SLL_Node<T> *mHead;
-	SLL_Node<T> *mTail;
+	SLL_Node<T> *_head;
+	SLL_Node<T> *_tail;
 	void initList(T data);
 };
-#include "SLlistIMP.hpp"
+#include "SLListIMP.hpp"
 
 #endif // SLLIST_HPP
-
