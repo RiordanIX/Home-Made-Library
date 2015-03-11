@@ -10,8 +10,8 @@ template<class T>
 void SLlist<T>::initList(T _data)
 {
 	// Because it's the only element in the list,
-	// the head and the tail are the same.
-	mTail = new Node<T>();
+	// the head and the tail are the same: nullptr
+	mTail = new SLL_Node<T>();
 	mTail->data = _data;	// Set data
 	mTail->next = nullptr;	// No next node.
 	mHead = mTail;
@@ -28,7 +28,7 @@ void SLlist<T>::insertBegin(T _data)
 
 	else
 	{
-		Node<T> *node = new Node<T>();
+		SLL_Node<T> *node = new SLL_Node<T>();
 		node->data = _data;
 		node->next = mHead;		// Setting next of the new node to this one
 		mHead = node;
@@ -45,7 +45,7 @@ void SLlist<T>::insertEnd(T _data)
 
 	else
 	{
-		Node<T> *node = new Node<T>();
+		SLL_Node<T> *node = new SLL_Node<T>();
 		node->data = _data;
 		node->next = nullptr;
 		mTail->next = node;	// This is now the second to last node, so pointing it to the end,
@@ -56,7 +56,7 @@ void SLlist<T>::insertEnd(T _data)
 template<class T>
 void SLlist<T>::printList()
 {
-	Node<T> *step = mHead;		// Used to step through the list.
+	SLL_Node<T> *step = mHead;		// Used to step through the list.
 
 	while (step != nullptr)		// while not at end of list.
 	{
@@ -77,10 +77,10 @@ void SLlist<T>::printList()
 template<class T>
 void SLlist<T>::clear()
 {
-	Node<T> *step = mHead;
+	SLL_Node<T> *step = mHead;
 	while (step != nullptr)
 	{
-		Node<T> *temp = step;	// Temporary node.
+		SLL_Node<T> *temp = step;	// Temporary node.
 		step = step->next;	// Set the step to the next node.
 		delete temp;		// Free the memory.
 	}
