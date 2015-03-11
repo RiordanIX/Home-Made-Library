@@ -1,13 +1,13 @@
-#ifndef LLISTIMP_HPP
-#define LLISTIMP_HPP
+#ifndef SLLISTIMP_HPP
+#define SLLISTIMP_HPP
 
-#include "Llist.hpp"    // Llist stands for "Linked List"
-
-template<class T>
-Llist<T>::Llist() : mHead(nullptr), mTail(nullptr) {}
+#include "SLlist.hpp"    // Singly Linked List
 
 template<class T>
-void Llist<T>::initList(T _data)
+SLlist<T>::SLlist() : mHead(nullptr), mTail(nullptr) {}
+
+template<class T>
+void SLlist<T>::initList(T _data)
 {
 	// Because it's the only element in the list,
 	// the head and the tail are the same.
@@ -18,7 +18,7 @@ void Llist<T>::initList(T _data)
 }
 
 template<class T>
-void Llist<T>::insertBegin(T _data)
+void SLlist<T>::insertBegin(T _data)
 {
 	// if empty, need to make new stuff.
 	if (mTail == nullptr)
@@ -36,7 +36,7 @@ void Llist<T>::insertBegin(T _data)
 }
 
 template<class T>
-void Llist<T>::insertEnd(T _data)
+void SLlist<T>::insertEnd(T _data)
 {
 	if (mHead == nullptr)
 	{
@@ -54,7 +54,7 @@ void Llist<T>::insertEnd(T _data)
 }
 
 template<class T>
-void Llist<T>::printList()
+void SLlist<T>::printList()
 {
 	Node<T> *step = mHead;		// Used to step through the list.
 
@@ -75,7 +75,7 @@ void Llist<T>::printList()
 // Since this is a dynamic class, we need to free up the memory we allocated.
 // No memory leaks here!
 template<class T>
-void Llist<T>::clear()
+void SLlist<T>::clear()
 {
 	Node<T> *step = mHead;
 	while (step != nullptr)
@@ -89,7 +89,7 @@ void Llist<T>::clear()
 }
 
 template<class T>
-Llist<T>::~Llist()
+SLlist<T>::~SLlist()
 {
 	clear();
 }
