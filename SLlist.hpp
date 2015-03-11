@@ -7,26 +7,26 @@
 **/
 
 template<class T>
-struct Node
+struct SLL_Node // Singly Linked List node
 {
 	T data;		// Actual data.
-	Node *next;	// Pointer to next node.
+	SLL_Node *next;	// Pointer to next node.
 };
 
 template<class T>
-class Llist
+class SLlist
 {
 public:
-	Llist();
+	SLlist();
 	void insertBegin(T data);
 	void insertEnd(T data);
 	void printList();
 	void clear();
 
-	~Llist();
+	~SLlist();
 private:
-	Node<T> *mHead;
-	Node<T> *mTail;
+	SLL_Node<T> *mHead;
+	SLL_Node<T> *mTail;
 	void initList(T data);
 };
 #include "SLlistIMP.hpp"
