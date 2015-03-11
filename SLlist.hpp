@@ -1,5 +1,5 @@
-#ifndef LLIST_HPP
-#define LLIST_HPP
+#ifndef SLLIST_HPP
+#define SLLIST_HPP
 
 #include <iostream>
 
@@ -29,7 +29,7 @@ private:
 	Node<T> *mTail;
 	void initList(T data);
 };
-#include "LlistIMP.hpp"
+#include "SLlistIMP.hpp"
 
-#endif // LLIST_HPP
+#endif // SLLIST_HPP
 
