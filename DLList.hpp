@@ -7,14 +7,14 @@
 
 // Will temporarily leave marks here showing what I've completed so I don't
 // Have to go back and forth seeing what i've done and not done. Will clear
-// That out when it's all done.
+// that out when it's all done.
 template<class T>
 class DLList{
 public:
 	DLList(); // Done!
 	~DLList();
-	void insertBegin(T item);// Done???????
-	void insertEnd(T item);
+	void insertBegin(T item); // Done
+	void insertEnd(T item); // Done
 	void insertAtIndex(T item, int index);
 	void push(T item);
 
@@ -22,16 +22,17 @@ public:
 	void clear();
 	T getAt(int index);
 
-	T pop() {return getAt(_size - 1);} // Done
-	int size() {return _size;}         // Done
+	T pop() {return getAt(_size - 1);}	// Done
+	int size() {return _size;}			// Done
 
 private:
 	struct DLL_Node{
 		T data;
 		DLL_Node *next;
-		DLL_Node *last;
+		DLL_Node *prev;
 	};
-	void initList(T start); // Done!
+	void __transverseTo(int index);
+	void __initList(T start); // Done!
 	int _size;
 	DLL_Node<T> *_head;
 	DLL_Node<T> *_tail;
